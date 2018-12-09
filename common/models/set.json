@@ -1,0 +1,32 @@
+{
+  "name": "set",
+  "plural": "sets",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "reps": {
+      "type": "number",
+      "required": true
+    },
+    "weight": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "exerciseSet": {
+      "type": "belongsTo",
+      "model": "exerciseSet",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

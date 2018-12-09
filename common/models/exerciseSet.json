@@ -1,0 +1,30 @@
+{
+  "name": "exerciseSet",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "session": {
+      "type": "belongsTo",
+      "model": "session",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "exercise": {
+      "type": "belongsTo",
+      "model": "exercise",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

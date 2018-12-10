@@ -6,78 +6,68 @@ module.exports = function(app) {
     }
 
     addSet(weight, reps) {
-      app.models.Set.create({weight, reps, exerciseSet: shoulderSets});
     }
 
     addSets(weight, repss) {
       var that = this;
-      repss.forEach(function(reps) {
-        that.addSet(weight, reps);
-      });
     }
   }
 
-  var chestGroup = app.models.MuscleGroup.create({name: 'Chest'});
-  var bbBenchExercise = createExercise('Barbell Bench Press', chestGroup);
-  var dbBenchExercise = createExercise('Dumbbell Bench Press', chestGroup);
-  var shoulderPress = createExercise('Shoulder Press', chestGroup);
+  function createSessions() {
+    console.log("Creating...");
+    app.models.Session.create([
+      {date: new Date(2018, 11, 05)},
+      {date: new Date(2018, 10, 27)},
+      {date: new Date(2018, 10, 20)},
+      {date: new Date(2018, 10, 16)},
+      {date: new Date(2018, 9, 31)},
+    ]).then(function(data) {
+      const sessions = data;
+      app.models.MuscleGroup.create([
+        {name: 'Chest'},
+        {name: 'Back'},
+        {name: 'Legs'},
+      ]).then(function(mgs) {
+        const [chest, back, legs] = mgs;
+        console.log(chest);
+        app.models.Exercise.create([
+          {name: 'Barbell Bench Press', muscleGroupId: chest.id},
+          {name: 'Dumbbell Bench Press', muscleGroupId: chest.id},
+          {name: 'Shoulder Press', muscleGroupId: chest.id},
+        ]).then(function(exercises) {
+          const [bbBenchExercise, dbBenchExercise, shoulderPress] = exercises;
+          function createExerciseSet(session, exercise, weight, repss) {
+            app.models.ExerciseSet.create({sessionId: session.id, exerciseId: exercise.id}).then(function(exerciseSet) {
+              repss.forEach(function(reps) {
+                app.models.Set.create({weight, reps, exerciseSetId: exerciseSet.id});
+              });
+            });
+          }
 
-  createSessions([
-    {date: new Date(2018, 11, 05)},
-    {date: new Date(2018, 10, 27)},
-    {date: new Date(2018, 10, 20)},
-    {date: new Date(2018, 10, 16)},
-    {date: new Date(2018, 9, 31)},
-  ]).then(function(data) {
-    data.forEach(function(datum) {
-      console.log("Data: " + datum.date);
+          var session = sessions[0];
+
+          createExerciseSet(session, bbBenchExercise, 225, [5, 5, 5, 5, 5]);
+          createExerciseSet(session, shoulderPress, 60, [6, 6, 6, 6, 4]);
+
+          session = sessions[1];
+          createExerciseSet(session, dbBenchExercise, 85, [7, 7, 7, 6, 5]);
+          createExerciseSet(session, shoulderPress, 55, [7, 7, 7, 7, 7]);
+
+          session = sessions[2];
+          createExerciseSet(session, dbBenchExercise, 65, [12, 12, 12, 12, 12]);
+          createExerciseSet(session, shoulderPress, 50, [10, 10, 7]);
+
+          session = sessions[3];
+          createExerciseSet(session, dbBenchExercise, 90, [6, 6, 6, 6]);
+          createExerciseSet(session, shoulderPress, 45, [12, 12, 12]);
+
+          session = sessions[4];
+          createExerciseSet(session, dbBenchExercise, 75, [10, 10, 10, 10, 7]);
+          createExerciseSet(session, shoulderPress, 40, [13, 15, 15, 15, 13]);
+        });
+      });
     });
-  });
-
-  var session = createSession(new Date(2018, 11, 05));
-  var benchSets = new ExerciseSet(session, bbBenchExercise);
-  var shoulderSets = new ExerciseSet(session, shoulderPress);
-
-  benchSets.addSets(225, [5, 5, 5, 5, 5]);
-  shoulderSets.addSets(60, [6, 6, 6, 6, 4]);
-
-  session = createSession(new Date(2018, 10, 27));
-  benchSets = new ExerciseSet(session, dbBenchExercise);
-  benchSets.addSets(85, [7, 7, 7, 6, 5]);
-  shoulderSets = new ExerciseSet(session, shoulderPress);
-  shoulderSets.addSets(55, [7, 7, 7, 7, 7]);
-
-  session = createSession(new Date(2018, 10, 20));
-  benchSets = new ExerciseSet(session, dbBenchExercise);
-  benchSets.addSets(65, [12, 12, 12, 12, 12]);
-  shoulderSets = new ExerciseSet(session, shoulderPress);
-  shoulderSets.addSets(50, [10, 10, 7]);
-
-  session = createSession(new Date(2018, 10, 16));
-  benchSets = new ExerciseSet(session, dbBenchExercise);
-  benchSets.addSets(90, [6, 6, 6, 6]);
-  shoulderSets = new ExerciseSet(session, shoulderPress);
-  shoulderSets.addSets(45, [12, 12, 12]);
-
-  session = createSession(new Date(2018, 9, 31));
-  benchSets = new ExerciseSet(session, bbBenchExercise);
-  benchSets.addSets(75, [10, 10, 10, 10, 7]);
-  shoulderSets = new ExerciseSet(session, shoulderPress);
-  shoulderSets.addSets(40, [13, 15, 15, 15, 13]);
-
-  function createSessions(dates) {
-    return app.models.Session.create(dates);
   }
 
-  function createSession(date) {
-    return app.models.Session.create({date});
-  }
-
-  function createExercise(name, muscleGroup) {
-    return app.models.Exercise.create({name: name, muscleGroup: muscleGroup});
-  }
-
-  function createExerciseSet(session, exercise) {
-    return app.models.ExerciseSet.create({session: session, exercise: exercise});
-  }
+  createSessions();
 };

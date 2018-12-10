@@ -38,23 +38,23 @@
   "Note": {
     "dataSource": "db"
   },
-  "session": {
+  "Session": {
     "dataSource": "db",
     "public": true
   },
-  "exerciseSet": {
+  "ExerciseSet": {
     "dataSource": "db",
     "public": true
   },
-  "set": {
+  "Set": {
     "dataSource": "db",
     "public": true
   },
-  "muscleGroup": {
+  "MuscleGroup": {
     "dataSource": "db",
     "public": true
   },
-  "exercise": {
+  "Exercise": {
     "dataSource": "db",
     "public": true
   }

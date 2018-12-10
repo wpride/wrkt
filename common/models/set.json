@@ -1,6 +1,6 @@
 {
-  "name": "set",
-  "plural": "sets",
+  "name": "Set",
+  "plural": "Sets",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -18,9 +18,9 @@
   },
   "validations": [],
   "relations": {
-    "exerciseSet": {
+    "ExerciseSet": {
       "type": "belongsTo",
-      "model": "exerciseSet",
+      "model": "ExerciseSet",
       "foreignKey": "",
       "options": {
         "nestRemoting": true

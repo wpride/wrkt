@@ -1,5 +1,5 @@
 {
-  "name": "exerciseSet",
+  "name": "ExerciseSet",
   "base": "PersistedModel",
   "idInjection": true,
   "options": {
@@ -8,17 +8,25 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "session": {
+    "Session": {
       "type": "belongsTo",
-      "model": "session",
+      "model": "Session",
       "foreignKey": "",
       "options": {
         "nestRemoting": true
       }
     },
-    "exercise": {
+    "Exercise": {
       "type": "belongsTo",
-      "model": "exercise",
+      "model": "Exercise",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "Sets": {
+      "type": "hasMany",
+      "model": "Set",
       "foreignKey": "",
       "options": {
         "nestRemoting": true

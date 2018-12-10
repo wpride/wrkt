@@ -6,7 +6,7 @@ module.exports = function(app, cb) {
     }
 
     addSet(weight, reps) {
-      app.models.set.create({weight, reps, exerciseSet: shoulderSets});
+      app.models.Set.create({weight, reps, exerciseSet: shoulderSets});
     }
 
     addSets(weight, repss) {
@@ -17,9 +17,9 @@ module.exports = function(app, cb) {
     }
   }
 
-  var backGroup = app.models.muscleGroup.create({name: 'Back'});
-  var chestGroup = app.models.muscleGroup.create({name: 'Chest'});
-  var legGroup = app.models.muscleGroup.create({name: 'Leg'});
+  var backGroup = app.models.MuscleGroup.create({name: 'Back'});
+  var chestGroup = app.models.MuscleGroup.create({name: 'Chest'});
+  var legGroup = app.models.MuscleGroup.create({name: 'Leg'});
   var bbBenchExercise = createExercise('Barbell Bench Press', chestGroup);
   var dbBenchExercise = createExercise('Dumbbell Bench Press', chestGroup);
   var shoulderPress = createExercise('Shoulder Press', chestGroup);
@@ -56,15 +56,15 @@ module.exports = function(app, cb) {
   shoulderSets.addSets(40, [13, 15, 15, 15, 13]);
 
   function createSession(date) {
-    return app.models.session.create({date});
+    return app.models.Session.create({date});
   }
 
   function createExercise(name, muscleGroup) {
-    return app.models.exercise.create({name, muscleGroup});
+    return app.models.Exercise.create({name, muscleGroup});
   }
 
   function createExerciseSet(session, exercise) {
-    return app.models.exerciseSet.create({session, exercise});
+    return app.models.ExerciseSet.create({session, exercise});
   }
   app.start();
 };

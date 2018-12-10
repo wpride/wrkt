@@ -8,6 +8,7 @@ class App extends Component {
 
     this.state = {
       notes: [],
+      sessions: [],
     };
   }
 
@@ -16,14 +17,17 @@ class App extends Component {
       .then(response => response.text())
       .then(JSON.parse)
       .then(notes => this.setState({ notes }));
+    fetch('http://localhost:3000/api/sessions')
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(sessions => this.setState({ sessions }));
   }
 
   render() {
-    const { notes } = this.state;
+    const { notes, sessions } = this.state;
     return (
       <div>
         <header>
-          <img src="{logo}" alt="logo" />
           <h1>wrkt</h1>
         </header>
         <p>
@@ -31,6 +35,12 @@ class App extends Component {
         </p>
         <ul>
           {notes.map(({ id, name, text }) => <li><b>{name}</b></li>)}
+        </ul>
+        <p>
+          Sessions
+        </p>
+        <ul>
+          {sessions.map(({ date, name, id }) => <li>{id} - <b>{new Date(date).toLocaleDateString("en-US")}</b></li>)}
         </ul>
       </div>
     );

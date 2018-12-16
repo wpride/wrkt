@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import './App.css';
 
 class App extends Component {
@@ -6,6 +7,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      muscleGroups: [],
       exercises: [],
       exerciseSets: [],
     };
@@ -15,6 +17,25 @@ class App extends Component {
     return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
   }
 
+  getSetComponent = (exerciseSet) => {
+    const {sets} = exerciseSet;
+    const date = exerciseSet.session.date;
+    const dateFormatted = moment(date).format('MM/DD');
+    return (
+      <div>
+        <b>{dateFormatted}: </b>
+        <>{sets[0].weight}</>
+        {sets.map((set) =><> {set.reps} </>)}
+      </div>
+    )
+  }
+
+  getSetsComponent = (exerciseSets) => {
+    if (!exerciseSets.length) {
+      return <div>None Selected</div>
+    }
+    return exerciseSets.map((exerciseSet) => <div>{this.getSetComponent(exerciseSet)}</div>);
+  }
 
   componentWillMount() {
     fetch('http://localhost:3000/api/exercises')
@@ -47,7 +68,7 @@ class App extends Component {
           Exercise Sets
         </p>
         <ul>
-          {exerciseSets.length ? exerciseSets.map(({ id }) => <div>{id}</div>) : <div>None Selected</div>}
+          {this.getSetsComponent(exerciseSets)}
         </ul>
       </div>
     );

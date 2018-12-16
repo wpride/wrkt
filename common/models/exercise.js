@@ -3,11 +3,9 @@
 module.exports = function(Exercise) {
   const filter = {
     include: {
-      relation: 'ExerciseSets',
+      relation: 'exerciseSets',
       scope: {
-        include: {
-          relation: 'Sets',
-        },
+        include: ['sets', 'session'],
       },
     },
   };
@@ -16,10 +14,12 @@ module.exports = function(Exercise) {
     console.log(`ID: ${exerciseId}`);
     Exercise.findById(exerciseId, filter, function(err, instance) {
       if (!instance) {
+        cb(err, null);
         return;
       }
       instance = instance.toJSON();
-      const exerciseSets = instance['ExerciseSets'];
+      console.log(instance);
+      const exerciseSets = instance['exerciseSets'];
       console.log(exerciseSets);
       cb(null, exerciseSets);
     });

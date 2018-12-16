@@ -18,9 +18,9 @@
   },
   "validations": [],
   "relations": {
-    "ExerciseSet": {
+    "exerciseSet": {
       "type": "belongsTo",
-      "model": "ExerciseSet",
+      "model": "exerciseSet",
       "foreignKey": "",
       "options": {
         "nestRemoting": true

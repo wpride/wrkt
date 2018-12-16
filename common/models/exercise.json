@@ -21,7 +21,7 @@
         "nestRemoting": true
       }
     },
-    "ExerciseSets": {
+    "exerciseSets": {
       "type": "hasMany",
       "model": "ExerciseSet",
       "foreignKey": "",

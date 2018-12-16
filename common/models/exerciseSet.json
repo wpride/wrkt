@@ -8,7 +8,7 @@
   "properties": {},
   "validations": [],
   "relations": {
-    "Session": {
+    "session": {
       "type": "belongsTo",
       "model": "Session",
       "foreignKey": "",
@@ -16,7 +16,7 @@
         "nestRemoting": true
       }
     },
-    "Exercise": {
+    "exercise": {
       "type": "belongsTo",
       "model": "Exercise",
       "foreignKey": "",
@@ -24,7 +24,7 @@
         "nestRemoting": true
       }
     },
-    "Sets": {
+    "sets": {
       "type": "hasMany",
       "model": "Set",
       "foreignKey": "",

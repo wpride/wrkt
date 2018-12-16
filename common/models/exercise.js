@@ -5,7 +5,9 @@ module.exports = function(Exercise) {
     include: {
       relation: 'ExerciseSets',
       scope: {
-        include: ['Sets', 'Session'],
+        include: {
+          relation: 'Sets',
+        },
       },
     },
   };
@@ -13,8 +15,13 @@ module.exports = function(Exercise) {
   Exercise.getSets = function(exerciseId, cb) {
     console.log(`ID: ${exerciseId}`);
     Exercise.findById(exerciseId, filter, function(err, instance) {
-      console.log(`Instance: ${instance}`);
-      cb(null, instance);
+      if (!instance) {
+        return;
+      }
+      instance = instance.toJSON();
+      const exerciseSets = instance['ExerciseSets'];
+      console.log(exerciseSets);
+      cb(null, exerciseSets);
     });
   };
   Exercise.remoteMethod(
@@ -22,7 +29,7 @@ module.exports = function(Exercise) {
     {
       http: {path: '/getSets', verb: 'get'},
       accepts: {arg: 'id', type: 'string', http: {source: 'query'}},
-      returns: {arg: 'name', type: 'string'},
+      returns: {arg: 'exerciseSets', type: 'array'},
     }
   );
 };

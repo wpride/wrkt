@@ -24,10 +24,10 @@ class App extends Component {
   }
 
   handleExerciseClick(exerciseId) {
-    fetch(`http://localhost:3000/api/exercises/${exerciseId}/exerciseSets/`)
+    fetch(`http://localhost:3000/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
-      .then(exerciseSets => this.setState({ exerciseSets }));
+      .then(response => this.setState({ exerciseSets: response.exerciseSets }));
   }
 
   render() {
@@ -47,7 +47,7 @@ class App extends Component {
           Exercise Sets
         </p>
         <ul>
-          {exerciseSets.length ? exerciseSets.map(({ id, name, text }) => <div>{name}</div>) : <div>None Selected</div>}
+          {exerciseSets.length ? exerciseSets.map(({ id }) => <div>{id}</div>) : <div>None Selected</div>}
         </ul>
       </div>
     );

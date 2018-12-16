@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -7,24 +6,32 @@ class App extends Component {
     super(props);
 
     this.state = {
-      notes: [],
-      sessions: [],
+      exercises: [],
+      exerciseSets: [],
     };
   }
+
+  getExerciseComponent = (name, id) => {
+    return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
+  }
+
 
   componentWillMount() {
     fetch('http://localhost:3000/api/exercises')
       .then(response => response.text())
       .then(JSON.parse)
-      .then(notes => this.setState({ notes }));
-    fetch('http://localhost:3000/api/sessions')
+      .then(exercises => this.setState({ exercises }));
+  }
+
+  handleExerciseClick(exerciseId) {
+    fetch(`http://localhost:3000/api/exercises/${exerciseId}/exerciseSets/`)
       .then(response => response.text())
       .then(JSON.parse)
-      .then(sessions => this.setState({ sessions }));
+      .then(exerciseSets => this.setState({ exerciseSets }));
   }
 
   render() {
-    const { notes, sessions } = this.state;
+    const { exercises, exerciseSets } = this.state;
     return (
       <div>
         <header>
@@ -34,13 +41,13 @@ class App extends Component {
           Exercises
         </p>
         <ul>
-          {notes.map(({ id, name, text }) => <li><b>{name}</b></li>)}
+          {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
         </ul>
         <p>
-          Sessions
+          Exercise Sets
         </p>
         <ul>
-          {sessions.map(({ date, name, id }) => <li>{id} - <b>{new Date(date).toLocaleDateString("en-US")}</b></li>)}
+          {exerciseSets.length ? exerciseSets.map(({ id, name, text }) => <div>{name}</div>) : <div>None Selected</div>}
         </ul>
       </div>
     );

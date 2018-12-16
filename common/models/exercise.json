@@ -20,6 +20,14 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "ExerciseSets": {
+      "type": "hasMany",
+      "model": "ExerciseSet",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
     }
   },
   "acls": [],

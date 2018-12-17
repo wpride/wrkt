@@ -36,5 +36,10 @@
     "url": ""
   },
   "license": "UNLICENSED",
-  "description": "wrkt"
+  "description": "wrkt",
+  "proxy": {
+	  "/api": {
+	    "target": "http://localhost:3000"
+	  }
+  }
 }

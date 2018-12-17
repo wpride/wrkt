@@ -5,12 +5,19 @@ import './App.css';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.clearState();
+  }
 
+  clearState = () => {
     this.state = {
       muscleGroups: [],
       exercises: [],
       exerciseSets: [],
     };
+  }
+  
+  getMuscleGroupComponent = (name, id) => {
+    return <div onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
   }
 
   getExerciseComponent = (name, id) => {
@@ -32,16 +39,24 @@ class App extends Component {
 
   getSetsComponent = (exerciseSets) => {
     if (!exerciseSets.length) {
-      return <div>None Selected</div>
+      return;
     }
     return exerciseSets.map((exerciseSet) => <div>{this.getSetComponent(exerciseSet)}</div>);
   }
 
   componentWillMount() {
-    fetch('http://localhost:3000/api/exercises')
+    fetch('http://localhost:3000/api/muscleGroups')
       .then(response => response.text())
       .then(JSON.parse)
-      .then(exercises => this.setState({ exercises }));
+      .then(muscleGroups => this.setState({ muscleGroups }));
+  }
+
+  handleMuscleGroupClick(muscleGroupId) {
+    this.state.exerciseSets = [];
+    fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(response => this.setState({ exercises: response }));
   }
 
   handleExerciseClick(exerciseId) {
@@ -52,12 +67,18 @@ class App extends Component {
   }
 
   render() {
-    const { exercises, exerciseSets } = this.state;
+    const { muscleGroups, exercises, exerciseSets } = this.state;
     return (
       <div>
         <header>
           <h1>wrkt</h1>
         </header>
+        <p>
+          Muscle Group
+        </p>
+        <ul>
+          {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
+        </ul>
         <p>
           Exercises
         </p>

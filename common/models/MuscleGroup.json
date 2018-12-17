@@ -12,7 +12,16 @@
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "exercises": {
+      "type": "hasMany",
+      "model": "Exercise",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
   "acls": [],
   "methods": {}
 }

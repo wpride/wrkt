@@ -60,7 +60,7 @@ class App extends Component {
   }
 
   handleExerciseClick(exerciseId) {
-    fetch(`http://wsp-wrkt.herokuapp.com/api/exercises/getSets/?id=${exerciseId}`)
+    fetch(`https://wsp-wrkt.herokuapp.com/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exerciseSets: response.exerciseSets }));

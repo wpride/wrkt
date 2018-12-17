@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    fetch('http://localhost:3000/api/muscleGroups')
+    fetch('https://wsp-wrkt.herokuapp.com/api/muscleGroups')
       .then(response => response.text())
       .then(JSON.parse)
       .then(muscleGroups => this.setState({ muscleGroups }));
@@ -53,14 +53,14 @@ class App extends Component {
 
   handleMuscleGroupClick(muscleGroupId) {
     this.state.exerciseSets = [];
-    fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
+    fetch(`https://wsp-wrkt.herokuapp.com/api/muscleGroups/${muscleGroupId}/exercises`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exercises: response }));
   }
 
   handleExerciseClick(exerciseId) {
-    fetch(`http://localhost:3000/api/exercises/getSets/?id=${exerciseId}`)
+    fetch(`http://wsp-wrkt.herokuapp.com/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exerciseSets: response.exerciseSets }));

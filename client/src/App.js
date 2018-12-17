@@ -17,11 +17,11 @@ class App extends Component {
   }
   
   getMuscleGroupComponent = (name, id) => {
-    return <div onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
+    return <div style="cursor:'pointer'" onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
   }
 
   getExerciseComponent = (name, id) => {
-    return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
+    return <div style="cursor:'pointer'" onClick={() => this.handleExerciseClick(id)}>{name}</div>
   }
 
   getSetComponent = (exerciseSet) => {

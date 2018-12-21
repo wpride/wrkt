@@ -108,41 +108,43 @@ class App extends Component {
   render() {
     const { muscleGroups, exercises, exerciseSets, sessions, sessionExerciseSets } = this.state;
     return (
+      <>
+      <header>
+        <h1>wrkt</h1>
+      </header>
       <div className={css(styles.row)}>
-      <div className={css(styles.column)}>
-        <header>
-          <h1>wrkt</h1>
-        </header>
-        <p>
-          Muscle Group
-        </p>
-        <ul>
-          {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
-        </ul>
-        <p>
-          Exercises
-        </p>
-        <ul>
-          {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
-        </ul>
-        <p>
-          Exercise Sets
-        </p>
-        <ul>
-          {this.getSetsComponent(exerciseSets)}
-        </ul>
+        <div className={css(styles.column)}>
+          <p>
+            Muscle Group
+          </p>
+          <ul>
+            {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
+          </ul>
+          <p>
+            Exercises
+          </p>
+          <ul>
+            {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
+          </ul>
+          <p>
+            Exercise Sets
+          </p>
+          <ul>
+            {this.getSetsComponent(exerciseSets)}
+          </ul>
+        </div>
+        <div className={css(styles.column)}>
+          <p>Sessions</p>
+          <ul>
+            {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
+          </ul>
+          <p>Session Sets</p>
+          <ul>
+            {this.getSessionSetsComponent(sessionExerciseSets)}
+          </ul>
+        </div>
       </div>
-      <div className={css(styles.column)}>
-        <p>test</p>
-        <ul>
-          {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
-        </ul>
-        <p>Session Sets</p>
-        <ul>
-          {this.getSessionSetsComponent(sessionExerciseSets)}
-        </ul>
-      </div>
-      </div>
+      </>
     );
   }
 }

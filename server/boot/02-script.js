@@ -19,6 +19,8 @@ module.exports = function(app) {
 
   function createSessions() {
     app.models.Session.create([
+      {date: new Date(2018, 11, 20)},
+      {date: new Date(2018, 11, 17)},
       {date: new Date(2018, 11, 13)},
       {date: new Date(2018, 11, 11)},
       {date: new Date(2018, 11, 10)},
@@ -91,7 +93,13 @@ module.exports = function(app) {
           }
 
           // Back
-          var session = getSessionByDate(new Date(2018, 11, 13));
+          var session = getSessionByDate(new Date(2018, 11, 17));
+          createExerciseSet(session, deadlift, 315, [3, 3, 3, 3, 4]);
+          createExerciseSet(session, chinUp, 20, [8, 8, 7, 7, 5]);
+          createExerciseSet(session, dbCurl, 20, [13]);
+          createExerciseSet(session, dbShrug, 55, [15]);
+
+          session = getSessionByDate(new Date(2018, 11, 13));
           createExerciseSet(session, chinUp, 35, [6, 6, 6, 6, 5]);
 
           session = getSessionByDate(new Date(2018, 11, 10));
@@ -166,6 +174,9 @@ module.exports = function(app) {
           createExerciseSet(session, dbCurl, 27.5, [9, 9, 8]);
 
           // Chest
+          session = getSessionByDate(new Date(2018, 11, 20));
+          createExerciseSet(session, dip, 30, [8, 9, 9, 9, 7]);
+
           session = getSessionByDate(new Date(2018, 11, 13));
           createExerciseSet(session, dbBenchExercise, 75, [12, 11]);
 
@@ -218,6 +229,9 @@ module.exports = function(app) {
           createExerciseSet(session, dip, 0, [12, 12, 10]);
 
           // Leg
+          session = getSessionByDate(new Date(2018, 11, 20));
+          createExerciseSet(session, squat, 185, [5, 6, 6, 6, 4]);
+
           session = getSessionByDate(new Date(2018, 11, 13));
           createExerciseSet(session, squat, 155, [7, 7, 7, 7, 7]);
 

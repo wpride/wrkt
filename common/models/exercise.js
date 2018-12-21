@@ -11,16 +11,13 @@ module.exports = function(Exercise) {
   };
 
   Exercise.getSets = function(exerciseId, cb) {
-    console.log(`ID: ${exerciseId}`);
     Exercise.findById(exerciseId, filter, function(err, instance) {
       if (!instance) {
         cb(err, null);
         return;
       }
       instance = instance.toJSON();
-      console.log(instance);
       const exerciseSets = instance['exerciseSets'];
-      console.log(exerciseSets);
       cb(null, exerciseSets);
     });
   };

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import moment from 'moment';
 import './App.css';
 
@@ -13,6 +14,8 @@ class App extends Component {
       muscleGroups: [],
       exercises: [],
       exerciseSets: [],
+      sessions: [],
+      sessionExerciseSets: [],
     };
   }
   
@@ -22,6 +25,33 @@ class App extends Component {
 
   getExerciseComponent = (name, id) => {
     return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
+  }
+
+  getSessionComponent = (date, id) => {
+    const dateFormatted = moment(date).format('MM/DD');
+    return (
+      <div onClick={() => this.handleSessionClick(id)}>
+        <b>{dateFormatted}</b>
+      </div>
+    )
+  }
+
+  getSessionSetComponent = (exerciseSet) => {
+    const {sets} = exerciseSet;
+    const name = exerciseSet.exercise.name;
+    return (
+      <div>
+        <b>{name}: </b>
+        <>{sets[0].weight}</>
+        {sets.map((set) =><> {set.reps} </>)}
+      </div>
+    )
+  }
+  getSessionSetsComponent = (exerciseSets) => {
+    if (!exerciseSets.length) {
+      return;
+    }
+    return exerciseSets.map((exerciseSet) => <div>{this.getSessionSetComponent(exerciseSet)}</div>);
   }
 
   getSetComponent = (exerciseSet) => {
@@ -45,31 +75,41 @@ class App extends Component {
   }
 
   componentWillMount() {
-    fetch('https://wsp-wrkt.herokuapp.com/api/muscleGroups')
+    fetch('http://localhost:3000/api/muscleGroups')
       .then(response => response.text())
       .then(JSON.parse)
       .then(muscleGroups => this.setState({ muscleGroups }));
+    fetch('http://localhost:3000/api/sessions')
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(sessions => this.setState({ sessions }));
   }
 
+  handleSessionClick(sessionId) {
+    fetch(`http://localhost:3000/api/Sessions/getSets/?id=${sessionId}`)
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(response => this.setState({ sessionExerciseSets: response.exerciseSets }));
+  }
   handleMuscleGroupClick(muscleGroupId) {
     this.state.exerciseSets = [];
-    fetch(`https://wsp-wrkt.herokuapp.com/api/muscleGroups/${muscleGroupId}/exercises`)
+    fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exercises: response }));
   }
-
   handleExerciseClick(exerciseId) {
-    fetch(`https://wsp-wrkt.herokuapp.com/api/exercises/getSets/?id=${exerciseId}`)
+    fetch(`http://localhost:3000/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exerciseSets: response.exerciseSets }));
   }
 
   render() {
-    const { muscleGroups, exercises, exerciseSets } = this.state;
+    const { muscleGroups, exercises, exerciseSets, sessions, sessionExerciseSets } = this.state;
     return (
-      <div>
+      <div className={css(styles.row)}>
+      <div className={css(styles.column)}>
         <header>
           <h1>wrkt</h1>
         </header>
@@ -92,8 +132,28 @@ class App extends Component {
           {this.getSetsComponent(exerciseSets)}
         </ul>
       </div>
+      <div className={css(styles.column)}>
+        <p>test</p>
+        <ul>
+          {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
+        </ul>
+        <p>Session Sets</p>
+        <ul>
+          {this.getSessionSetsComponent(sessionExerciseSets)}
+        </ul>
+      </div>
+      </div>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  row: {
+    display: 'flex'
+  },
+  column: {
+    flex: '50%'
+  }
+});
 
 export default App;

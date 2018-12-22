@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'react-bootstrap';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { StyleSheet, css } from 'aphrodite';
 import moment from 'moment';
@@ -78,6 +79,92 @@ class Sessions extends Component {
       </>
     );
   }
+}
+
+class NewSession extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state= {
+      sets: [{reps: 0}],
+      exercises: [],
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRepsChange = this.handleRepsChange.bind(this);
+    this.handleAddSet = this.handleAddSet.bind(this);
+  }
+
+  getExerciseOption(exercise) {
+    const {id, name} = exercise;
+    return <option value={id}>{name}</option>;
+  }
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleRepsChange(event, index) {
+    this.state.sets[parseInt(index)] = {reps: event.target.value};
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+  }
+
+  handleAddSet() {
+    this.setState({sets: this.state.sets.concat({reps: 0})});
+  }
+  componentWillMount() {
+    fetch('http://localhost:3000/api/Exercises')
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(exercises => this.setState({ exercises }));
+  }
+
+  getRepsInput(reps, index) {
+    return (
+      <input
+        name="reps"
+        type="number"
+        index={index}
+        value={reps}
+        onChange={(event) => this.handleRepsChange(event, index)} />
+    )
+  }
+
+  getWeightInput() {
+    return (
+      <input
+        name="weight"
+        type="number"
+        value={this.state.weight}
+        onChange={this.handleChange} />
+    )
+  }
+
+  render() {
+    const {exercises, sets} = this.state;
+    console.log(exercises);
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Exercise:
+          <select value={this.state.exerciseId} onChange={this.handleChange}>
+            {exercises.map((exercise) => this.getExerciseOption(exercise))}
+          </select>
+        </label>
+        <label>
+          Weight:
+          {this.getWeightInput()}
+        </label>
+        <label>
+          Reps:
+          {sets.map((set, index) => this.getRepsInput(set, index))}
+        </label>
+        <Button onClick={() => this.handleAddSet()}>Add Set</Button>
+        <input type="submit" value="Submit" />
+      </form>
+  )};  
 }
 
 class Exercises extends Component {
@@ -185,12 +272,16 @@ function App() {
           <li>
             <Link to="/sessions">Sessions</Link>
           </li>
+          <li>
+            <Link to="/new">New Session</Link>
+          </li>
         </ul>
 
         <hr />
 
         <Route exact path="/" component={Exercises} />
         <Route path="/sessions" component={Sessions} />
+        <Route path="/new" component={NewSession} />
       </div>
     </Router>
   );

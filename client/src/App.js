@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { StyleSheet, css } from 'aphrodite';
 import moment from 'moment';
 import './App.css';
 
-class App extends Component {
+class Sessions extends Component {
   constructor(props) {
     super(props);
     this.clearState();
@@ -11,22 +12,11 @@ class App extends Component {
 
   clearState = () => {
     this.state = {
-      muscleGroups: [],
-      exercises: [],
-      exerciseSets: [],
       sessions: [],
       sessionExerciseSets: [],
     };
   }
   
-  getMuscleGroupComponent = (name, id) => {
-    return <div onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
-  }
-
-  getExerciseComponent = (name, id) => {
-    return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
-  }
-
   getSessionComponent = (date, id) => {
     const dateFormatted = moment(date).format('MM/DD');
     return (
@@ -54,6 +44,64 @@ class App extends Component {
     return exerciseSets.map((exerciseSet) => <div>{this.getSessionSetComponent(exerciseSet)}</div>);
   }
 
+  componentWillMount() {
+    fetch('http://localhost:3000/api/sessions')
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(sessions => this.setState({ sessions }));
+  }
+
+  handleSessionClick(sessionId) {
+    fetch(`http://localhost:3000/api/Sessions/getSets/?id=${sessionId}`)
+      .then(response => response.text())
+      .then(JSON.parse)
+      .then(response => this.setState({ sessionExerciseSets: response.exerciseSets }));
+  }
+
+  render() {
+    const { sessions, sessionExerciseSets } = this.state;
+    return (
+      <>
+      <header>
+        <h1>wrkt</h1>
+      </header>
+      <div>
+        <p>Sessions</p>
+        <ul>
+          {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
+        </ul>
+        <p>Session Sets</p>
+        <ul>
+          {this.getSessionSetsComponent(sessionExerciseSets)}
+        </ul>
+      </div>
+      </>
+    );
+  }
+}
+
+class Exercises extends Component {
+  constructor(props) {
+    super(props);
+    this.clearState();
+  }
+
+  clearState = () => {
+    this.state = {
+      muscleGroups: [],
+      exercises: [],
+      exerciseSets: [],
+    };
+  }
+  
+  getMuscleGroupComponent = (name, id) => {
+    return <div onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
+  }
+
+  getExerciseComponent = (name, id) => {
+    return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
+  }
+
   getSetComponent = (exerciseSet) => {
     const {sets} = exerciseSet;
     const date = exerciseSet.session.date;
@@ -79,17 +127,6 @@ class App extends Component {
       .then(response => response.text())
       .then(JSON.parse)
       .then(muscleGroups => this.setState({ muscleGroups }));
-    fetch('http://localhost:3000/api/sessions')
-      .then(response => response.text())
-      .then(JSON.parse)
-      .then(sessions => this.setState({ sessions }));
-  }
-
-  handleSessionClick(sessionId) {
-    fetch(`http://localhost:3000/api/Sessions/getSets/?id=${sessionId}`)
-      .then(response => response.text())
-      .then(JSON.parse)
-      .then(response => this.setState({ sessionExerciseSets: response.exerciseSets }));
   }
   handleMuscleGroupClick(muscleGroupId) {
     this.state.exerciseSets = [];
@@ -106,48 +143,59 @@ class App extends Component {
   }
 
   render() {
-    const { muscleGroups, exercises, exerciseSets, sessions, sessionExerciseSets } = this.state;
+    const { muscleGroups, exercises, exerciseSets } = this.state;
     return (
       <>
       <header>
         <h1>wrkt</h1>
       </header>
-      <div className={css(styles.row)}>
-        <div className={css(styles.column)}>
-          <p>
-            Muscle Group
-          </p>
-          <ul>
-            {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
-          </ul>
-          <p>
-            Exercises
-          </p>
-          <ul>
-            {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
-          </ul>
-          <p>
-            Exercise Sets
-          </p>
-          <ul>
-            {this.getSetsComponent(exerciseSets)}
-          </ul>
-        </div>
-        <div className={css(styles.column)}>
-          <p>Sessions</p>
-          <ul>
-            {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
-          </ul>
-          <p>Session Sets</p>
-          <ul>
-            {this.getSessionSetsComponent(sessionExerciseSets)}
-          </ul>
-        </div>
+      <div>
+        <p>
+          Muscle Group
+        </p>
+        <ul>
+          {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
+        </ul>
+        <p>
+          Exercises
+        </p>
+        <ul>
+          {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
+        </ul>
+        <p>
+          Exercise Sets
+        </p>
+        <ul>
+          {this.getSetsComponent(exerciseSets)}
+        </ul>
       </div>
       </>
     );
   }
 }
+
+function App() {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Exercises</Link>
+          </li>
+          <li>
+            <Link to="/sessions">Sessions</Link>
+          </li>
+        </ul>
+
+        <hr />
+
+        <Route exact path="/" component={Exercises} />
+        <Route path="/sessions" component={Sessions} />
+      </div>
+    </Router>
+  );
+}
+
 
 const styles = StyleSheet.create({
   row: {

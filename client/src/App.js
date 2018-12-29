@@ -86,20 +86,15 @@ class NewSession extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      sets: [{reps: 0}],
+      sets: [0],
       exercises: [],
+      exerciseId: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleAddSet = this.handleAddSet.bind(this);
-    this.getNewSet = this.getNewSet.bind(this);
-  }
-
-  getNewSet() {
-    return {
-      reps: 0,
-    }
+    this.handleExerciseChange = this.handleExerciseChange.bind(this);
   }
 
   getExerciseOption(exercise) {
@@ -109,25 +104,26 @@ class NewSession extends Component {
   handleChange(event) {
     this.setState({weight: event.target.value});
   }
+  handleExerciseChange(event) {
+    this.setState({exerciseId: event.target.value});
+  }
 
   handleRepsChange(event, index) {
     const sets = [...this.state.sets];
-    const set = sets[index];
-    console.log(set)
-    set.reps = event.target.value;
-    sets[index] = set;
-    this.setState(sets);
+    sets[index] = parseInt(event.target.value);
+    this.setState({sets: sets});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    fetch('http://localhost:3000/api/sessions/newSession', {
+    fetch('http://localhost:3000/api/exerciseSets/newExerciseSet', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        exerciseId: this.state.exerciseId,
         weight: this.state.weight,
         sets: this.state.sets,
       })
@@ -135,7 +131,7 @@ class NewSession extends Component {
   }
 
   handleAddSet() {
-    this.setState({sets: this.state.sets.concat(this.getNewSet())});
+    this.setState({sets: this.state.sets.concat(0)});
   }
   componentWillMount() {
     fetch('http://localhost:3000/api/Exercises')
@@ -145,13 +141,14 @@ class NewSession extends Component {
   }
 
   getRepsInput(set, index) {
+    console.log('Reps:');
     console.log(set);
     return (
       <input
         name="reps"
         type="number"
         index={index}
-        value={set['reps']}
+        value={set}
         onChange={(event) => this.handleRepsChange(event, index)} />
     )
   }
@@ -173,7 +170,7 @@ class NewSession extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Exercise:
-          <select value={this.state.exerciseId} onChange={this.handleChange}>
+          <select value={this.state.exerciseId} onChange={this.handleExerciseChange}>
             {exercises.map((exercise) => this.getExerciseOption(exercise))}
           </select>
         </label>

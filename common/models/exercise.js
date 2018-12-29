@@ -18,7 +18,10 @@ module.exports = function(Exercise) {
       }
       instance = instance.toJSON();
       const exerciseSets = instance['exerciseSets'];
-      cb(null, exerciseSets);
+      const sortedSets = exerciseSets.sort(function(a, b) {
+        return new Date(a.session.date) < new Date(b.session.date);
+      });
+      cb(null, sortedSets);
     });
   };
   Exercise.remoteMethod(

@@ -5,6 +5,9 @@
   "options": {
     "validateUpsert": true
   },
+  "scope": {
+    "order": "date DESC"
+  },
   "properties": {
     "date": {
       "type": "date",

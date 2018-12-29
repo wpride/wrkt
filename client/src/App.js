@@ -93,6 +93,13 @@ class NewSession extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleAddSet = this.handleAddSet.bind(this);
+    this.getNewSet = this.getNewSet.bind(this);
+  }
+
+  getNewSet() {
+    return {
+      reps: 0,
+    }
   }
 
   getExerciseOption(exercise) {
@@ -100,19 +107,35 @@ class NewSession extends Component {
     return <option value={id}>{name}</option>;
   }
   handleChange(event) {
-    this.setState({value: event.target.value});
+    this.setState({weight: event.target.value});
   }
 
   handleRepsChange(event, index) {
-    this.state.sets[parseInt(index)] = {reps: event.target.value};
+    const sets = [...this.state.sets];
+    const set = sets[index];
+    console.log(set)
+    set.reps = event.target.value;
+    sets[index] = set;
+    this.setState(sets);
   }
 
   handleSubmit(event) {
     event.preventDefault();
+    fetch('http://localhost:3000/api/sessions/newSession', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        weight: this.state.weight,
+        sets: this.state.sets,
+      })
+    })
   }
 
   handleAddSet() {
-    this.setState({sets: this.state.sets.concat({reps: 0})});
+    this.setState({sets: this.state.sets.concat(this.getNewSet())});
   }
   componentWillMount() {
     fetch('http://localhost:3000/api/Exercises')
@@ -121,13 +144,14 @@ class NewSession extends Component {
       .then(exercises => this.setState({ exercises }));
   }
 
-  getRepsInput(reps, index) {
+  getRepsInput(set, index) {
+    console.log(set);
     return (
       <input
         name="reps"
         type="number"
         index={index}
-        value={reps}
+        value={set['reps']}
         onChange={(event) => this.handleRepsChange(event, index)} />
     )
   }

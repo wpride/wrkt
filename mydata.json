@@ -5,9 +5,9 @@
     "ACL": 1,
     "RoleMapping": 1,
     "Role": 1,
-    "Session": 37,
-    "ExerciseSet": 127,
-    "Set": 444,
+    "Session": 38,
+    "ExerciseSet": 129,
+    "Set": 452,
     "MuscleGroup": 4,
     "Exercise": 15
   },
@@ -51,7 +51,8 @@
       "31": "{\"date\":\"2018-10-04T07:00:00.000Z\",\"name\":\"Lift\",\"id\":31}",
       "32": "{\"date\":\"2018-10-02T07:00:00.000Z\",\"name\":\"Lift\",\"id\":32}",
       "34": "{\"date\":\"2018-12-29T05:00:00.000Z\",\"name\":\"Lift\",\"id\":34}",
-      "35": "{\"date\":\"2018-12-28T00:00:00.000Z\",\"name\":\"Lift\",\"id\":35}"
+      "35": "{\"date\":\"2018-12-28T00:00:00.000Z\",\"name\":\"Lift\",\"id\":35}",
+      "37": "{\"date\":\"2018-12-22T00:00:00.000Z\",\"name\":\"Lift\",\"id\":37}"
     },
     "ExerciseSet": {
       "1": "{\"sessionId\":2,\"exerciseId\":6,\"id\":1}",
@@ -149,7 +150,9 @@
       "123": "{\"sessionId\":35,\"exerciseId\":6,\"id\":123}",
       "124": "{\"sessionId\":35,\"exerciseId\":5,\"id\":124}",
       "125": "{\"id\":125,\"sessionId\":35,\"exerciseId\":9}",
-      "126": "{\"id\":126,\"sessionId\":35,\"exerciseId\":10}"
+      "126": "{\"id\":126,\"sessionId\":35,\"exerciseId\":10}",
+      "127": "{\"sessionId\":37,\"exerciseId\":2,\"id\":127}",
+      "128": "{\"sessionId\":37,\"exerciseId\":4,\"id\":128}"
     },
     "Set": {
       "1": "{\"reps\":3,\"weight\":315,\"exerciseSetId\":1,\"id\":1}",
@@ -565,7 +568,15 @@
       "440": "{\"reps\":6,\"weight\":185,\"exerciseSetId\":125,\"id\":440}",
       "441": "{\"reps\":6,\"weight\":35,\"exerciseSetId\":126,\"id\":441}",
       "442": "{\"reps\":6,\"weight\":35,\"exerciseSetId\":126,\"id\":442}",
-      "443": "{\"reps\":6,\"weight\":35,\"exerciseSetId\":126,\"id\":443}"
+      "443": "{\"reps\":6,\"weight\":35,\"exerciseSetId\":126,\"id\":443}",
+      "444": "{\"reps\":7,\"weight\":90,\"exerciseSetId\":127,\"id\":444}",
+      "445": "{\"reps\":7,\"weight\":90,\"exerciseSetId\":127,\"id\":445}",
+      "446": "{\"reps\":7,\"weight\":90,\"exerciseSetId\":127,\"id\":446}",
+      "447": "{\"reps\":6,\"weight\":90,\"exerciseSetId\":127,\"id\":447}",
+      "448": "{\"reps\":12,\"weight\":0,\"exerciseSetId\":128,\"id\":448}",
+      "449": "{\"reps\":12,\"weight\":0,\"exerciseSetId\":128,\"id\":449}",
+      "450": "{\"reps\":12,\"weight\":0,\"exerciseSetId\":128,\"id\":450}",
+      "451": "{\"reps\":12,\"weight\":0,\"exerciseSetId\":128,\"id\":451}"
     },
     "MuscleGroup": {
       "1": "{\"name\":\"Chest\",\"id\":1}",

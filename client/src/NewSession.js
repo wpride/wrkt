@@ -7,12 +7,22 @@ class AddExerciseComponent extends Component {
     super(props);
     this.state= {
       sets: [0],
-      exerciseId: null,
+      exerciseId: this.props.exercises[0].id,
+      weight: 0,
     };
     this.handleWeightChange = this.handleWeightChange.bind(this);
     this.handleRepsChange = this.handleRepsChange.bind(this);
     this.handleAddSet = this.handleAddSet.bind(this);
     this.handleExerciseChange = this.handleExerciseChange.bind(this);
+  }
+
+  getOutputData() {
+    const {sets, weight, exerciseId} = this.state;
+    return {
+      sets: sets,
+      weight: weight,
+      exerciseId: exerciseId,
+    }
   }
 
   getExerciseOption(exercise) {
@@ -37,8 +47,6 @@ class AddExerciseComponent extends Component {
   }
 
   getRepsInput(set, index) {
-    console.log('Reps:');
-    console.log(set);
     return (
       <input
         name="reps"
@@ -55,7 +63,7 @@ class AddExerciseComponent extends Component {
         name="weight"
         type="number"
         value={this.state.weight}
-        onChange={this.handleChange} />
+        onChange={this.handleWeightChange} />
     )
   }
 
@@ -91,15 +99,15 @@ class NewSession extends Component {
     this.state= {
       date: new Date(),
       exercises: [],
-      exerciseSetCount: 1,
+      exerciseComponents: [],
+      exerciseComponentRefs: [],
     };
     this.handleAddExerciseSet = this.handleAddExerciseSet.bind(this);
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleNewExerciseSet() {
     fetch('http://localhost:3000/api/exerciseSets/newExerciseSet', {
       method: 'POST',
       headers: {
@@ -114,11 +122,36 @@ class NewSession extends Component {
       })
     })
   }
+
+  handleNewSession() {
+    const exerciseSets = [];
+    this.state.exerciseComponentRefs.forEach(function(ref) {
+      exerciseSets.push(ref.current.getOutputData());
+    });
+    fetch('http://localhost:3000/api/sessions/newSession', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        date: this.state.date,
+        sets: exerciseSets,
+      })
+    })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.handleNewSession();
+  }
   handleDateChange(event) {
     this.setState({date: event.target.value});
   }
   handleAddExerciseSet() {
-    this.setState({exerciseSetCount: this.state.exerciseSetCount + 1});
+    const exerciseComponents = [...this.state.exerciseComponents];
+    exerciseComponents.push(this.getAddExerciseComponent())
+    this.setState({exerciseComponents: exerciseComponents});
   }
   componentWillMount() {
     fetch('http://localhost:3000/api/Exercises')
@@ -126,18 +159,24 @@ class NewSession extends Component {
       .then(JSON.parse)
       .then(exercises => this.setState({ exercises }));
   }
+  getAddExerciseComponent() {
+    const {exercises} = this.state;
+    const ref = React.createRef();
+    const exerciseComponentRefs = [...this.state.exerciseComponentRefs];
+    exerciseComponentRefs.push(ref);
+    this.setState({exerciseComponentRefs: exerciseComponentRefs});
+    return (
+      <>
+        <AddExerciseComponent 
+          exercises={exercises} 
+          ref={ref}/>
+        <br/>
+      </>
+    )
+  }
 
   render() {
-    const {date, exercises, exerciseSetCount} = this.state;
-    const exerciseComponents = [];
-    for (var i=0; i<exerciseSetCount; i++) {
-      exerciseComponents.push(
-        <>
-        <AddExerciseComponent exercises={exercises} />
-        <br/>
-        </>
-      )
-    }
+    const {date, exercises, exerciseComponents} = this.state;
     return (
       <>
         <form onSubmit={this.handleSubmit}>

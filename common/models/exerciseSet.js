@@ -2,7 +2,6 @@
 
 module.exports = function(ExerciseSet) {
   ExerciseSet.newExerciseSet = function(weight, sets, exerciseId, cb) {
-    console.log('new exercise set!');
     const todayDate = new Date().setHours(0, 0, 0, 0);
     ExerciseSet.app.models.Session.findOrCreate(
       {
@@ -15,8 +14,6 @@ module.exports = function(ExerciseSet) {
         if (err) {
           cb(err, null);
         }
-        console.log('Success!');
-        console.log(session);
         ExerciseSet
           .create({sessionId: session.id, exerciseId: exerciseId})
           .then(function(exerciseSet) {

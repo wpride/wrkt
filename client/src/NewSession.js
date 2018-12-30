@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import moment from 'moment';
 
 class AddExerciseComponent extends Component {
   constructor(props) {
@@ -157,7 +156,8 @@ class NewSession extends Component {
     fetch('http://localhost:3000/api/Exercises')
       .then(response => response.text())
       .then(JSON.parse)
-      .then(exercises => this.setState({ exercises }));
+      .then(exercises => this.setState({ exercises }))
+      .then(this.forceUpdate());
   }
   getAddExerciseComponent() {
     const {exercises} = this.state;

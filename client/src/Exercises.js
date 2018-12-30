@@ -4,15 +4,19 @@ import moment from 'moment';
 class Exercises extends Component {
   constructor(props) {
     super(props);
-    this.clearState();
-  }
-
-  clearState = () => {
     this.state = {
       muscleGroups: [],
       exercises: [],
       exerciseSets: [],
-    };
+    }
+  }
+
+  clearState = () => {
+    this.setState({
+      muscleGroups: [],
+      exercises: [],
+      exerciseSets: [],
+    });
   }
   
   getMuscleGroupComponent = (name, id) => {
@@ -50,7 +54,7 @@ class Exercises extends Component {
       .then(muscleGroups => this.setState({ muscleGroups }));
   }
   handleMuscleGroupClick(muscleGroupId) {
-    this.state.exerciseSets = [];
+    this.setState({exerciseSets: []});
     fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
       .then(response => response.text())
       .then(JSON.parse)

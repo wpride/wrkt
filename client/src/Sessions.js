@@ -5,13 +5,17 @@ class Sessions extends Component {
   constructor(props) {
     super(props);
     this.clearState();
-  }
-
-  clearState = () => {
     this.state = {
       sessions: [],
       sessionExerciseSets: [],
     };
+  }
+
+  clearState = () => {
+    this.setState({
+      sessions: [],
+      sessionExerciseSets: [],
+    });
   }
   
   getSessionComponent = (date, id) => {

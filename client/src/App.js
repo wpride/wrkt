@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import { Button } from 'react-bootstrap';
+import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { StyleSheet, css } from 'aphrodite';
 import Sessions from './Sessions.js';
 import NewSession from './NewSession.js';
 import Exercises from './Exercises.js';
@@ -31,15 +29,5 @@ function App() {
     </Router>
   );
 }
-
-
-const styles = StyleSheet.create({
-  row: {
-    display: 'flex'
-  },
-  column: {
-    flex: '50%'
-  }
-});
 
 export default App;

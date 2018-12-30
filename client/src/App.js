@@ -8,20 +8,20 @@ function App() {
   return (
     <Router>
       <div>
-        <ul>
-          <li>
-            <Link to="/">Exercises</Link>
-          </li>
-          <li>
-            <Link to="/sessions">Sessions</Link>
-          </li>
-          <li>
-            <Link to="/new">New Session</Link>
-          </li>
-        </ul>
-
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">WRKT</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <Link class="nav-item nav-link" to="/">Exercises</Link>
+          <Link class="nav-item nav-link" to="/sessions">Sessions</Link>
+          <Link to="/new" class="nav-item nav-link">New Session</Link>
+        </div>
+      </div>
+    </nav>
         <hr />
-
         <Route exact path="/" component={Exercises} />
         <Route path="/sessions" component={Sessions} />
         <Route path="/new" component={NewSession} />

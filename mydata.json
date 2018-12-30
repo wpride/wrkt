@@ -143,7 +143,7 @@
       "87": "{\"sessionId\":22,\"exerciseId\":12,\"id\":87}",
       "88": "{\"sessionId\":25,\"exerciseId\":12,\"id\":88}",
       "89": "{\"sessionId\":28,\"exerciseId\":12,\"id\":89}",
-      "104": "{\"sessionId\":34,\"exerciseId\":1,\"id\":104}",
+      "104": "{\"id\":104,\"sessionId\":34,\"exerciseId\":2}",
       "105": "{\"sessionId\":34,\"exerciseId\":4,\"id\":105}",
       "106": "{\"sessionId\":34,\"exerciseId\":3,\"id\":106}",
       "123": "{\"sessionId\":35,\"exerciseId\":6,\"id\":123}",

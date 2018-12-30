@@ -36,8 +36,6 @@ module.exports = function(Session) {
         Session.app.models.ExerciseSet
           .create(sets.map((set) => ({sessionId: session.id, exerciseId: set.exerciseId})))
           .then(function(exerciseSets) {
-            console.log("ExerciseSets");
-            console.log(exerciseSets);
             Session.app.models.Set.create([exerciseSets.map(function(exerciseSet, index) {
               const set = sets[index];
               return [set.sets.map(function(reps) {

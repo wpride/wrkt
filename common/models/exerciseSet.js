@@ -18,7 +18,6 @@ module.exports = function(ExerciseSet) {
           .create({sessionId: session.id, exerciseId: exerciseId})
           .then(function(exerciseSet) {
             sets.forEach(function(reps) {
-              console.log('Adding Exercise Set with reps ' + reps);
               ExerciseSet.app.models.Set.create({
                 weight: weight,
                 reps: reps,

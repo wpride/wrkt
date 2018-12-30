@@ -72,12 +72,14 @@ class AddExerciseComponent extends Component {
     const {exercises} = this.props;
     return (
     <>
-      <label>
-        Exercise:
-        <select value={this.state.exerciseId} onChange={this.handleExerciseChange}>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Exercise</span>
+        </div>
+        <select class="form-control" value={this.state.exerciseId} onChange={this.handleExerciseChange}>
           {exercises.map((exercise) => this.getExerciseOption(exercise))}
         </select>
-      </label>
+      </div>
       <div class="input-group">
         <div class="input-group-prepend">
           <span class="input-group-text" id="">Weight</span>

@@ -1,15 +1,18 @@
 {
   "scripts": {
-    "start": "webpack-dev-server src/index.js --mode development"
+    "start": "react-scripts start"
   },
   "dependencies": {
     "babel-loader": "^8.0.4",
     "react": "^16.7.0",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "react-scripts": "^2.1.2"
   },
-  "devDependencies": {
-    "webpack": "^4.28.3",
-    "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.14"
-  }
+  "devDependencies": {},
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

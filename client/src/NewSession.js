@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class AddExerciseComponent extends Component {
   constructor(props) {
@@ -77,15 +78,19 @@ class AddExerciseComponent extends Component {
           {exercises.map((exercise) => this.getExerciseOption(exercise))}
         </select>
       </label>
-      <label>
-        Weight:
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Weight</span>
+        </div>
         {this.getWeightInput()}
-      </label>
-      <label>
-        Reps:
+      </div>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="">Reps</span>
+        </div>
         {sets.map((set, index) => this.getRepsInput(set, index))}
-      </label>
-      <Button onClick={() => this.handleAddSet()}>Add Set</Button>
+      </div>
+      <Button className="btn btn-secondary" onClick={() => this.handleAddSet()}>Add Set</Button>
     </>
     )
   };  
@@ -189,9 +194,8 @@ class NewSession extends Component {
           <br/><br/>
           {exerciseComponents}
           <br/>
-          <Button onClick={() => this.handleAddExerciseSet()}>Add Exercise</Button>
-          <br/>
-          <input type="submit" value="Submit" />
+          <Button className="btn btn-primary" onClick={() => this.handleAddExerciseSet()}>Add Exercise</Button>
+          <Button type="submit" value="Submit" className="btn btn-success">Submit</Button>
         </form>
       </>
     )

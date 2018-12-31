@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint .",
     "prestart": "npm run --prefix client build",
-    "start": "nodemon .",
+    "start": "npm .",
     "start-dev": "concurrently \"nodemon .\" \"npm start --prefix client\"",
     "posttest": "npm run lint &amp;&amp; nsp check",
     "heroku-postbuild": "cd client && yarn && npm run build"

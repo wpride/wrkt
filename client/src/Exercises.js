@@ -20,11 +20,11 @@ class Exercises extends Component {
   }
   
   getMuscleGroupComponent = (name, id) => {
-    return <div onClick={() => this.handleMuscleGroupClick(id)}>{name}</div>
+    return <li className="list-group-item" onClick={() => this.handleMuscleGroupClick(id)}>{name}</li>
   }
 
   getExerciseComponent = (name, id) => {
-    return <div onClick={() => this.handleExerciseClick(id)}>{name}</div>
+    return <li className="list-group-item" onClick={() => this.handleExerciseClick(id)}>{name}</li>
   }
 
   getSetComponent = (exerciseSet) => {
@@ -32,11 +32,11 @@ class Exercises extends Component {
     const date = exerciseSet.session.date;
     const dateFormatted = moment(date).format('MM/DD');
     return (
-      <div>
+      <li className="list-group-item">
         <b>{dateFormatted}: </b>
         <>{sets[0].weight}</>
         {sets.map((set) =><> {set.reps} </>)}
-      </div>
+      </li>
     )
   }
 
@@ -70,31 +70,25 @@ class Exercises extends Component {
   render() {
     const { muscleGroups, exercises, exerciseSets } = this.state;
     return (
-      <>
-      <header>
-        <h1>wrkt</h1>
-      </header>
-      <div>
-        <p>
-          Muscle Group
-        </p>
-        <ul>
-          {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
-        </ul>
-        <p>
-          Exercises
-        </p>
-        <ul>
-          {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
-        </ul>
-        <p>
-          Exercise Sets
-        </p>
-        <ul>
-          {this.getSetsComponent(exerciseSets)}
-        </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm"> 
+          <ul className="list-group">
+            {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
+          </ul>
+          </div>
+          <div className="col-sm"> 
+          <ul className="list-group">
+            {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
+          </ul>
+          </div>
+          <div className="col-sm"> 
+          <ul className="list-group">
+            {this.getSetsComponent(exerciseSets)}
+          </ul>
+          </div>
+        </div>
       </div>
-      </>
     );
   }
 }

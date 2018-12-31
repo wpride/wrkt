@@ -21,9 +21,9 @@ class Sessions extends Component {
   getSessionComponent = (date, id) => {
     const dateFormatted = moment(date).format('MM/DD');
     return (
-      <div onClick={() => this.handleSessionClick(id)}>
+      <li className="list-group-item" onClick={() => this.handleSessionClick(id)}>
         <b>{dateFormatted}</b>
-      </div>
+      </li>
     )
   }
 
@@ -63,18 +63,19 @@ class Sessions extends Component {
     const { sessions, sessionExerciseSets } = this.state;
     return (
       <>
-      <header>
-        <h1>wrkt</h1>
-      </header>
-      <div>
-        <p>Sessions</p>
-        <ul>
-          {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
-        </ul>
-        <p>Session Sets</p>
-        <ul>
-          {this.getSessionSetsComponent(sessionExerciseSets)}
-        </ul>
+      <div className="container">
+        <div className="row">
+          <div className="col-sm">
+          <ul className="list-group">
+            {sessions.map(({ id, date }) => this.getSessionComponent(date, id))}
+          </ul>
+          </div>
+          <div className="col-sm">
+          <ul>
+            {this.getSessionSetsComponent(sessionExerciseSets)}
+          </ul>
+        </div>
+        </div>
       </div>
       </>
     );

@@ -1,8 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import Sessions from './Sessions.js';
-import NewSession from './NewSession.js';
-import Exercises from './Exercises.js';
+import Sessions from './Sessions.jsx';
+import NewSession from './NewSession.jsx';
+import Exercises from './Exercises.jsx';
 
 function App() {
   return (

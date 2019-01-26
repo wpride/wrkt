@@ -7,7 +7,7 @@ var app = module.exports = loopback();
 const path = require('path');
 
 app.start = function() {
-  const port = process.env.port || 3000;
+  const port = process.env.PORT || 3000;
   return app.listen(port, function() {
     app.emit('started');
     var staticFolder = path.dirname(

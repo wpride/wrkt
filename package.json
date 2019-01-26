@@ -17,6 +17,7 @@
     "dev": "concurrently \"npm run server\" \"cd client && npm run dev\""
   },
   "dependencies": {
+    "babel-eslint": "^10.0.1",
     "compression": "^1.0.3",
     "concurrently": "^4.1.0",
     "cors": "^2.8.5",
@@ -27,7 +28,8 @@
     "loopback-console": "^1.1.0",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0",
-    "webpack": "^4.29.0"
+    "webpack": "^4.29.0",
+    "webpack-cli": "^3.2.1"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",

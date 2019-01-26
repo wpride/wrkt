@@ -18,7 +18,7 @@ class Exercises extends Component {
       exerciseSets: [],
     });
   }
-  
+
   getMuscleGroupComponent = (name, id) => {
     return <li className="list-group-item" onClick={() => this.handleMuscleGroupClick(id)}>{name}</li>
   }
@@ -48,20 +48,20 @@ class Exercises extends Component {
   }
 
   componentWillMount() {
-    fetch('https://wsp-wrkt.herokuapp.com/api/muscleGroups')
+    fetch('http://localhost:3000/api/muscleGroups')
       .then(response => response.text())
       .then(JSON.parse)
       .then(muscleGroups => this.setState({ muscleGroups }));
   }
   handleMuscleGroupClick(muscleGroupId) {
     this.setState({exerciseSets: []});
-    fetch(`https://wsp-wrkt.herokuapp.com/api/muscleGroups/${muscleGroupId}/exercises`)
+    fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exercises: response }));
   }
   handleExerciseClick(exerciseId) {
-    fetch(`https://wsp-wrkt.herokuapp.com/api/exercises/getSets/?id=${exerciseId}`)
+    fetch(`http://localhost:3000/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exerciseSets: response.exerciseSets }));
@@ -72,17 +72,17 @@ class Exercises extends Component {
     return (
       <div className="container">
         <div className="row">
-          <div className="col-sm"> 
+          <div className="col-sm">
           <ul className="list-group">
             {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
           </ul>
           </div>
-          <div className="col-sm"> 
+          <div className="col-sm">
           <ul className="list-group">
             {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
           </ul>
           </div>
-          <div className="col-sm"> 
+          <div className="col-sm">
           <ul className="list-group">
             {this.getSetsComponent(exerciseSets)}
           </ul>

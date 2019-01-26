@@ -95,7 +95,7 @@ class AddExerciseComponent extends Component {
       <Button className="btn btn-secondary" onClick={() => this.handleAddSet()}>Add Set</Button>
     </>
     )
-  };  
+  };
 
 }
 
@@ -114,7 +114,7 @@ class NewSession extends Component {
   }
 
   handleNewExerciseSet() {
-    fetch('https://wsp-wrkt.herokuapp.com/api/exerciseSets/newExerciseSet', {
+    fetch('http://localhost:3000/api/exerciseSets/newExerciseSet', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -134,7 +134,7 @@ class NewSession extends Component {
     this.state.exerciseComponentRefs.forEach(function(ref) {
       exerciseSets.push(ref.current.getOutputData());
     });
-    fetch('https://wsp-wrkt.herokuapp.com/api/sessions/newSession', {
+    fetch('http://localhost:3000/api/sessions/newSession', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -160,7 +160,7 @@ class NewSession extends Component {
     this.setState({exerciseComponents: exerciseComponents});
   }
   componentWillMount() {
-    fetch('https://wsp-wrkt.herokuapp.com/api/Exercises')
+    fetch('http://localhost:3000/api/Exercises')
       .then(response => response.text())
       .then(JSON.parse)
       .then(exercises => this.setState({ exercises }))
@@ -174,8 +174,8 @@ class NewSession extends Component {
     this.setState({exerciseComponentRefs: exerciseComponentRefs});
     return (
       <>
-        <AddExerciseComponent 
-          exercises={exercises} 
+        <AddExerciseComponent
+          exercises={exercises}
           ref={ref}/>
         <br/>
       </>
@@ -187,9 +187,9 @@ class NewSession extends Component {
     return (
       <>
         <form onSubmit={this.handleSubmit}>
-          <input 
-            type="date" 
-            id="date" 
+          <input
+            type="date"
+            id="date"
             name="date"
             onChange={(event) => this.handleDateChange(event)}
             value={date} />

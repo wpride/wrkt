@@ -16,8 +16,8 @@ class Sessions extends Component {
       sessions: [],
       sessionExerciseSets: [],
     });
-  }
-  
+  };
+
   getSessionComponent = (date, id) => {
     const dateFormatted = moment(date).format('MM/DD');
     return (
@@ -25,7 +25,7 @@ class Sessions extends Component {
         <b>{dateFormatted}</b>
       </li>
     )
-  }
+  };
 
   getSessionSetComponent = (exerciseSet) => {
     const {sets} = exerciseSet;
@@ -37,7 +37,7 @@ class Sessions extends Component {
         {sets.map((set) =><> {set.reps} </>)}
       </div>
     )
-  }
+  };
   getSessionSetsComponent = (exerciseSets) => {
     if (!exerciseSets.length) {
       return;
@@ -46,14 +46,14 @@ class Sessions extends Component {
   }
 
   componentWillMount() {
-    fetch('https://wsp-wrkt.herokuapp.com/api/sessions')
+    fetch('http://localhost:3000/api/sessions')
       .then(response => response.text())
       .then(JSON.parse)
       .then(sessions => this.setState({ sessions }));
   }
 
   handleSessionClick(sessionId) {
-    fetch(`https://wsp-wrkt.herokuapp.com/api/Sessions/getSets/?id=${sessionId}`)
+    fetch(`http://localhost:3000/api/Sessions/getSets/?id=${sessionId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ sessionExerciseSets: response.exerciseSets }));

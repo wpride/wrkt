@@ -39,6 +39,7 @@
     "react": "^16.7.0",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.7.0",
+    "react-router-dom": "^4.3.1",
     "serve-favicon": "^2.0.1",
     "strong-error-handler": "^3.0.0",
     "style-loader": "^0.23.1",

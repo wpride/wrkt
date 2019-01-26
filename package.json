@@ -11,7 +11,7 @@
     "start": "node server/server.js",
     "start-dev": "concurrently \"nodemon .\" \"npm start --prefix client\"",
     "posttest": "npm run lint &amp;&amp; nsp check",
-    "heroku-postbuild": "cd client && webpack -p",
+    "heroku-postbuild": "cd client && npm webpack -p",
     "client": "cd client && npm webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon",
     "dev": "concurrently \"npm run server\" \"cd client && npm run dev\""
@@ -22,6 +22,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.5",
     "bootstrap": "^4.2.1",
     "clean-webpack-plugin": "^1.0.1",
     "compression": "^1.0.3",
@@ -48,7 +49,6 @@
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.5",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "eslint": "^3.17.1",

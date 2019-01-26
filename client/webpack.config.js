@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html'),
-      filename: 'index.html',
+      filename: 'dist/index.html',
       inject: 'body'
     }),
     new CleanWebpackPlugin([outputDirectory]),

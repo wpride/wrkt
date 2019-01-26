@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "react-scripts start",
-    "build": "webpack -p",
+    "build": "webpack --mode production",
     "dev": "webpack-dev-server --hot --inline"
   },
   "dependencies": {

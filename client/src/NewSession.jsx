@@ -114,7 +114,7 @@ class NewSession extends Component {
   }
 
   handleNewExerciseSet() {
-    fetch('${API_URL}/api/exerciseSets/newExerciseSet', {
+    fetch(`${API_URL}/api/exerciseSets/newExerciseSet`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -134,7 +134,7 @@ class NewSession extends Component {
     this.state.exerciseComponentRefs.forEach(function(ref) {
       exerciseSets.push(ref.current.getOutputData());
     });
-    fetch('${API_URL}/api/sessions/newSession', {
+    fetch(`${API_URL}/api/sessions/newSession`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -148,7 +148,6 @@ class NewSession extends Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
     this.handleNewSession();
   }
   handleDateChange(event) {

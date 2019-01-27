@@ -7,8 +7,8 @@ const webpack = require('webpack')
 const outputDirectory = "build";
 
 const API_URL = {
-  production: JSON.stringify('http://localhost:3000'),
-  development: JSON.stringify('https://wsp-wrkt.herokuapp.com')
+  development: JSON.stringify('http://localhost:3000'),
+  production: JSON.stringify('https://wsp-wrkt.herokuapp.com')
 };
 
 const environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';

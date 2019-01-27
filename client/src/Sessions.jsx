@@ -46,14 +46,14 @@ class Sessions extends Component {
   }
 
   componentWillMount() {
-    fetch('http://localhost:3000/api/sessions')
+    fetch(`${API_URL}/api/sessions`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(sessions => this.setState({ sessions }));
   }
 
   handleSessionClick(sessionId) {
-    fetch(`http://localhost:3000/api/Sessions/getSets/?id=${sessionId}`)
+    fetch(`${API_URL}/api/Sessions/getSets/?id=${sessionId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ sessionExerciseSets: response.exerciseSets }));

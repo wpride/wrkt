@@ -48,20 +48,20 @@ class Exercises extends Component {
   }
 
   componentWillMount() {
-    fetch('http://localhost:3000/api/muscleGroups')
+    fetch(`${API_URL}/api/muscleGroups`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(muscleGroups => this.setState({ muscleGroups }));
   }
   handleMuscleGroupClick(muscleGroupId) {
     this.setState({exerciseSets: []});
-    fetch(`http://localhost:3000/api/muscleGroups/${muscleGroupId}/exercises`)
+    fetch(`${API_URL}/api/muscleGroups/${muscleGroupId}/exercises`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exercises: response }));
   }
   handleExerciseClick(exerciseId) {
-    fetch(`http://localhost:3000/api/exercises/getSets/?id=${exerciseId}`)
+    fetch(`${API_URL}/api/exercises/getSets/?id=${exerciseId}`)
       .then(response => response.text())
       .then(JSON.parse)
       .then(response => this.setState({ exerciseSets: response.exerciseSets }));

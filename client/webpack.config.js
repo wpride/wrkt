@@ -2,8 +2,16 @@
 const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const webpack = require('webpack')
 
 const outputDirectory = "build";
+
+const API_URL = {
+  production: JSON.stringify('http://localhost:3000'),
+  development: JSON.stringify('https://wsp-wrkt.herokuapp.com')
+};
+
+const environment = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.jsx'),
@@ -55,6 +63,9 @@ module.exports = {
       inject: 'body'
     }),
     new CleanWebpackPlugin([outputDirectory]),
+    new webpack.DefinePlugin({
+      'API_URL': API_URL[environment]
+    })
   ],
   devServer: {
     contentBase: './public',

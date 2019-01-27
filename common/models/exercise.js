@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = function(Exercise) {
+module.exports = (Exercise) => {
   const filter = {
     include: {
       relation: 'exerciseSets',
@@ -10,28 +8,34 @@ module.exports = function(Exercise) {
     },
   };
 
-  Exercise.getSets = function(exerciseId, cb) {
-    Exercise.findById(exerciseId, filter, function(err, instance) {
+  Exercise.getSets = (exerciseId, callback) => {
+    Exercise.findById(exerciseId, filter, (err, instance) => {
       if (!instance) {
-        cb(err, null);
+        callback(err, null);
         return;
       }
       instance = instance.toJSON();
-      const exerciseSets = instance['exerciseSets'];
-      const sortedSets = exerciseSets.sort(function(a, b) {
+      const { exerciseSets } = instance;
+      const sortedSets = exerciseSets.sort((a, b) => {
         const aDate = new Date(a.session.date);
         const bDate = new Date(b.session.date);
-        return aDate > bDate ? -1 : aDate < bDate ? 1 : 0;
+        if (aDate > bDate) {
+          return -1;
+        }
+        if (aDate < bDate) {
+          return 1;
+        }
+        return 0;
       });
-      cb(null, sortedSets);
+      callback(null, sortedSets);
     });
   };
   Exercise.remoteMethod(
     'getSets',
     {
-      http: {path: '/getSets', verb: 'get'},
-      accepts: {arg: 'id', type: 'string', http: {source: 'query'}},
-      returns: {arg: 'exerciseSets', type: 'array'},
+      http: { path: '/getSets', verb: 'get' },
+      accepts: { arg: 'id', type: 'string', http: { source: 'query' } },
+      returns: { arg: 'exerciseSets', type: 'array' },
     }
   );
 };

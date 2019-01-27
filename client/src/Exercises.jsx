@@ -10,18 +10,9 @@ class Exercises extends Component {
       exerciseSets: [],
     }
   }
-
-  clearState = () => {
-    this.setState({
-      muscleGroups: [],
-      exercises: [],
-      exerciseSets: [],
-    });
-  }
-
   getMuscleGroupComponent = (name, id) => {
     return <li className="list-group-item" onClick={() => this.handleMuscleGroupClick(id)}>{name}</li>
-  }
+  };
 
   getExerciseComponent = (name, id) => {
     return <li className="list-group-item" onClick={() => this.handleExerciseClick(id)}>{name}</li>
@@ -74,12 +65,12 @@ class Exercises extends Component {
         <div className="row">
           <div className="col-sm">
           <ul className="list-group">
-            {muscleGroups.map(({ id, name, text }) => this.getMuscleGroupComponent(name, id))}
+            {muscleGroups.map(({ id, name }) => this.getMuscleGroupComponent(name, id))}
           </ul>
           </div>
           <div className="col-sm">
           <ul className="list-group">
-            {exercises.map(({ id, name, text }) => this.getExerciseComponent(name, id))}
+            {exercises.map(({ id, name }) => this.getExerciseComponent(name, id))}
           </ul>
           </div>
           <div className="col-sm">

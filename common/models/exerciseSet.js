@@ -1,7 +1,5 @@
-'use strict';
-
-module.exports = function(ExerciseSet) {
-  ExerciseSet.newExerciseSet = function(weight, sets, exerciseId, cb) {
+module.exports = (ExerciseSet) => {
+  ExerciseSet.newExerciseSet = (weight, sets, exerciseId, cb) => {
     const todayDate = new Date().setHours(0, 0, 0, 0);
     ExerciseSet.app.models.Session.findOrCreate(
       {
@@ -10,23 +8,22 @@ module.exports = function(ExerciseSet) {
         },
       }, {
         date: todayDate,
-      }, function(err, session) {
+      }, (err, session) => {
         if (err) {
           cb(err, null);
         }
         ExerciseSet
-          .create({sessionId: session.id, exerciseId: exerciseId})
-          .then(function(exerciseSet) {
-            sets.forEach(function(reps) {
+          .create({ sessionId: session.id, exerciseId })
+          .then((exerciseSet) => {
+            sets.forEach((reps) => {
               ExerciseSet.app.models.Set.create({
-                weight: weight,
-                reps: reps,
+                weight,
+                reps,
                 exerciseSetId: exerciseSet.id,
               });
             });
             cb(null, session);
-          }
-        );
+          });
       }
     );
   };
@@ -34,13 +31,13 @@ module.exports = function(ExerciseSet) {
   ExerciseSet.remoteMethod(
     'newExerciseSet',
     {
-      http: {path: '/newExerciseSet', verb: 'post'},
+      http: { path: '/newExerciseSet', verb: 'post' },
       accepts: [
-        {arg: 'weight', type: 'string'},
-        {arg: 'sets', type: 'array'},
-        {arg: 'exerciseId', type: 'string'},
+        { arg: 'weight', type: 'string' },
+        { arg: 'sets', type: 'array' },
+        { arg: 'exerciseId', type: 'string' },
       ],
-      returns: {arg: 'exerciseSets', type: 'array'},
+      returns: { arg: 'exerciseSets', type: 'array' },
     }
   );
 };

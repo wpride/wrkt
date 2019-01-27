@@ -3,12 +3,13 @@ const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
-const outputDirectory = "dist";
+const outputDirectory = "build";
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index.jsx'),
   output: {
     path: path.resolve(__dirname, outputDirectory),
+    publicPath: 'build/',
     filename: 'index_bundle.js'
   },
   resolve: {
@@ -50,7 +51,7 @@ module.exports = {
   plugins: [
     new HtmlWebPackPlugin({
       template: path.resolve(__dirname, 'public', 'index.html'),
-      filename: 'dist/index.html',
+      filename: 'index.html',
       inject: 'body'
     }),
     new CleanWebpackPlugin([outputDirectory]),
